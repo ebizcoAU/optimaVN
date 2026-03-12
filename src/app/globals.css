@@ -1,0 +1,172 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Brand colours */
+  --red:   #E8381A;
+  --gold:  #F5A623;
+  --green: #1DB954;
+  --ink:   #0D0D0D;
+  --dark:  #141414;
+  --card:  #1C1C1C;
+  --cream: #F5F0E8;
+  --border: rgba(255,255,255,0.08);
+  --muted: #888;
+
+  /* ─── Responsive spacing tokens ───────────────────────────
+     Used as: px-[--px-page]  →  padding: var(--px-page)
+     Change one value here, every section updates.          */
+  --px-page:    1rem;       /* 16px  — mobile  <640px  */
+  --py-section: 4rem;       /* 64px  — mobile vertical */
+  --gap-section: 2rem;      /* 32px  — mobile grid gap */
+  --gap-content: 1.25rem;   /* 20px  — card/inner gap  */
+
+  /* Fluid type scale — clamp(min, preferred, max)
+     vw middle keeps scaling all the way to 1920px          */
+  --text-display: clamp(1.75rem, 4vw,   4rem);
+  --text-h2:      clamp(1.5rem,  3vw,   3.2rem);
+  --text-body:    clamp(0.875rem, 1.1vw, 1.125rem);
+  --text-small:   clamp(0.75rem,  0.9vw, 1rem);
+  --text-label:   clamp(0.7rem,   0.8vw, 0.875rem);
+}
+
+/* sm: 640px */
+@media (min-width: 640px) {
+  :root {
+    --px-page:    2rem;       /* 32px */
+    --py-section: 5rem;       /* 80px */
+    --gap-section: 2.5rem;
+  }
+}
+
+/* md: 768px — iPad */
+@media (min-width: 768px) {
+  :root {
+    --px-page:    3rem;       /* 48px */
+    --py-section: 6rem;       /* 96px */
+    --gap-section: 3rem;
+    --gap-content: 1.5rem;
+  }
+}
+
+/* lg: 1024px — iPad Pro / large tablet */
+@media (min-width: 1024px) {
+  :root {
+    --px-page:    3.5rem;     /* 56px = original px-14 */
+    --py-section: 6rem;
+    --gap-section: 3.5rem;
+    --gap-content: 1.5rem;
+  }
+}
+
+/* xl: 1280px — desktop */
+@media (min-width: 1280px) {
+  :root {
+    --px-page:    4rem;       /* 64px  */
+    --py-section: 7rem;       /* 112px */
+    --gap-section: 4rem;
+  }
+}
+
+/* 2xl: 1536px — large desktop */
+@media (min-width: 1536px) {
+  :root {
+    --px-page:    5rem;       /* 80px  */
+    --py-section: 8rem;       /* 128px */
+    --gap-section: 5rem;
+  }
+}
+
+/* FHD: 1920px — Full HD monitors */
+@media (min-width: 1920px) {
+  :root {
+    --px-page:    8rem;       /* 128px — keeps content from stretching edge-to-edge */
+    --py-section: 9rem;       /* 144px */
+    --gap-section: 5rem;
+  }
+}
+
+html { scroll-behavior: smooth; overflow-x: hidden; }
+
+body {
+  background: var(--ink);
+  color: var(--cream);
+  overflow-x: hidden;
+}
+
+/* Reveal animation for scroll */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Mic pulse ring */
+.mic-ring {
+  box-shadow: 0 0 0 8px rgba(232,56,26,0.2), 0 0 0 16px rgba(232,56,26,0.06);
+  animation: micPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes micPulse {
+  0%, 100% { box-shadow: 0 0 0 8px rgba(232,56,26,0.2), 0 0 0 16px rgba(232,56,26,0.06); }
+  50%       { box-shadow: 0 0 0 14px rgba(232,56,26,0.1), 0 0 0 26px rgba(232,56,26,0.03); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+@keyframes countdown {
+  from { width: 100%; }
+  to   { width: 0%; }
+}
+
+.animate-fade-up         { animation: fadeUp 0.8s ease both; }
+.animate-fade-up-delay-1 { animation: fadeUp 0.8s 0.1s ease both; }
+.animate-fade-up-delay-2 { animation: fadeUp 0.8s 0.2s ease both; }
+.animate-fade-up-delay-3 { animation: fadeUp 0.8s 0.3s ease both; }
+.animate-fade-up-delay-4 { animation: fadeUp 0.8s 0.4s ease both; }
+.animate-blink           { animation: blink 1s infinite; }
+.animate-countdown       { animation: countdown 5s linear; }
+
+/* ─── Layout utility classes ────────────────────────────────
+   Replace hardcoded px-14 / py-24 / gap-20 with these.
+   Values are driven by the CSS vars above — change the vars,
+   every component updates automatically.                    */
+
+/* Section shell — horizontal page padding + vertical rhythm */
+.section-pad {
+  padding-left:  var(--px-page);
+  padding-right: var(--px-page);
+  padding-top:   var(--py-section);
+  padding-bottom: var(--py-section);
+}
+
+/* Horizontal padding only (Navbar, Footer) */
+.px-page {
+  padding-left:  var(--px-page);
+  padding-right: var(--px-page);
+}
+
+/* Responsive grid gap driven by token */
+.gap-section { gap: var(--gap-section); }
+.gap-content  { gap: var(--gap-content); }
+
+/* Inner content grid gaps (stacked on mobile, wider on md+) */
+.gap-grid {
+  gap: 1.25rem;
+}
+@media (min-width: 768px) {
+  .gap-grid { gap: var(--gap-section); }
+}
